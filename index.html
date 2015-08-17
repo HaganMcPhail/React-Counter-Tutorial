@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>React Counter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div id="content"></div>
+
+    <script type="text/jsx">
+        
+        var DisplayNumber = React.createClass({
+            
+            render: function() {
+                return (
+                    <div>
+                        {this.props.localCounter}
+                    </div>
+                )
+            }
+        });
+
+        var IncrementButton = React.createClass({
+            localHandleClick: function() {
+                this.props.localHandleClick(this.props.increment);
+            },
+            render: function() {
+                return (
+                    <button onClick={this.localHandleClick}>
+                        +{this.props.increment}
+                    </button>
+                )
+            }
+        });
+
+        var Main = React.createClass({
+            getInitialState: function() {
+                return {counter: 0}
+            },
+            handleClick: function(increment) {
+                this.setState({counter: this.state.counter + increment});
+            },
+            render: function() {
+                return (
+                    <div>
+                        <IncrementButton localHandleClick={this.handleClick} increment={1} />
+                        <IncrementButton localHandleClick={this.handleClick} increment={5} />
+                        <IncrementButton localHandleClick={this.handleClick} increment={10} />
+                        <IncrementButton localHandleClick={this.handleClick} increment={100} />
+                        <DisplayNumber localCounter={this.state.counter} />
+                    </div>
+                )
+            }
+        });
+
+        React.render(<Main />, document.getElementById('content'));
+
+    </script>
+
+</body>
+</html>
